@@ -22,6 +22,32 @@ A minimal full‑stack demo app to showcase automation:
 
 ---
 
+## How to Run (Step‑by‑Step)
+Backend (navigate from the terminal)
+
+cd backend
+npm install    # or npm ci
+npm start      # http://localhost:5000
+npm run test:api
+
+
+Frontend (navigate to from another terminal)
+
+cd frontend
+npm install    # or npm ci
+npm start      # http://localhost:3000
+
+# UI tests (servers must be running --- run these commands from another terminal)
+npx playwright install
+npm run test:ui          # headless
+npm run test:ui:headed   # headed (debug)
+npm run test:ui:report   # open HTML report
+
+
+CI (GitHub Actions)
+Triggers on push/PR.
+
+
 Notes for Reviewers
 This app intentionally uses in‑memory storage for simplicity (suitable for demo automation tasks).
 

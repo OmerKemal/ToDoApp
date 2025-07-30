@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # Install deps
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm ci
+
+      # Start backend on :5000 (background)
+      - name: Start backend
+        working-directory: backend
+        run: |
+          nohup npm start >/dev/null 2>&1 &
+          sleep 3
+
+      # Start frontend on :3000 (background)
+      - name: Start frontend
+        working-directory: frontend
+        env:
+          BROWSER: none
+          PORT: 3000
+        run: |
+          nohup npm start >/dev/null 2>&1 &
+          # CRA may need a bit of time to boot on CI
+          sleep 12
+
+      # Run Newman API tests
+      - name: Run Newman (API)
+        working-directory: backend
+        run: npx newman run tests/postman/todo-api.postman_collection.json -r cli
+
+      # Playwright UI tests
+      - name: Install Playwright browsers
+        working-directory: frontend
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright (UI)
+        working-directory: frontend
+        run: npx playwright test

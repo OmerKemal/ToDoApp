@@ -32,7 +32,125 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+:root {
+  /* Tweak this to change the frame theme color */
+  --frame-color: #4c6ef5;
+  /* elegant indigo/blue */
+  --bg-soft: #f6f8fb;
+  /* very light background */
+  --text-color: #1f2a37;
+  --muted: #6b7280;
+}
+
+/* Page canvas */
+.page {
+  min-height: 100vh;
+  background: var(--bg-soft);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 16px;
+  color: var(--text-color);
+}
+
+/* Content width + frame */
+.content {
+  width: 100%;
+  max-width: 760px;
+}
+
+/* The elegant color frame */
+.card {
+  background: #fff;
+  border: 2px solid var(--frame-color);
+  border-radius: 14px;
+  padding: 24px 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Headings / small accents */
+.heading {
+  margin: 0 0 16px 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.2px;
+}
+
+/* Justify the main text content */
+.page p,
+.page li,
+.page .prose {
+  text-align: justify;
+  text-justify: inter-word;
+  /* extra hint for some browsers */
+  hyphens: auto;
+  /* smoother justification (ensure <html lang="en">) */
+}
+
+/* Form tuning (optional polish) */
+.card form input[type="text"],
+.card form input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 8px 0 12px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+}
+
+.card form input[type="text"]:focus,
+.card form input[type="password"]:focus {
+  border-color: var(--frame-color);
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.15);
+}
+
+.card button,
+.card a.button {
+  display: inline-block;
+  border: 1px solid var(--frame-color);
+  background: var(--frame-color);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 8px;
+}
+
+.card button.secondary,
+.card a.secondary {
+  background: transparent;
+  color: var(--frame-color);
+}
+
+.actions {
+  margin-top: 12px;
+}
+
+/* List look (todos) */
+.todo-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 16px 0 0;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.todo-list li .text {
+  flex: 1;
 }

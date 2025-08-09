@@ -25,17 +25,18 @@ const CreateTodo = () => {
   };
 
   return (
-    <div>
-      <h2>Create New Todo</h2>
-      <form onSubmit={handleSubmit}>
+    <div data-testid="create-todo-page">
+      <h2 data-testid="create-todo-title">Create New Todo</h2>
+      <form onSubmit={handleSubmit} data-testid="create-todo-form">
         <input
           type="text"
           placeholder="Enter todo text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           required
+          data-testid="create-todo-input"
         />
-        <button type="submit">Create</button>
+        <button type="submit" data-testid="create-todo-submit">Create</button>
       </form>
     </div>
   );

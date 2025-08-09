@@ -16,11 +16,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:ui": "playwright test",
     "test:ui:headed": "playwright test --headed",
-    "test:ui:report": "playwright show-report"
+    "test:ui:report": "playwright show-report",
+    "test": "npx playwright test ./tests/E2E.spec.js"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +41,6 @@
     ]
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.1"
+    "@playwright/test": "^1.54.2"
   }
 }

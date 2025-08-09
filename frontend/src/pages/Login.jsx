@@ -25,8 +25,13 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate> {/* optional: disable native validation */}
-      <h2>Login</h2>
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      data-testid="login-form"
+    >
+      {/* optional: disable native validation */}
+      <h2 data-testid="login-title">Login</h2>
 
       <input
         type="text"             // <-- text instead of email
@@ -36,7 +41,9 @@ const Login = () => {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
-      /><br />
+        data-testid="login-username"
+      />
+      <br />
 
       <input
         type="password"
@@ -46,9 +53,11 @@ const Login = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
-      /><br />
+        data-testid="login-password"
+      />
+      <br />
 
-      <button type="submit">Login</button>
+      <button type="submit" data-testid="login-submit">Login</button>
     </form>
   );
 };

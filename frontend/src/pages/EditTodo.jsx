@@ -36,16 +36,19 @@ const EditTodo = () => {
   };
 
   return (
-    <div>
-      <h2>Edit Todo</h2>
-      <form onSubmit={handleUpdate}>
+    <div data-testid="edit-todo-page">
+      <h2 data-testid="edit-todo-title">Edit Todo</h2>
+      <form data-testid="edit-todo-form" onSubmit={handleUpdate}>
         <input
+          data-testid="edit-todo-input"
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           required
         />
-        <button type="submit">Update</button>
+        <button data-testid="edit-todo-submit" type="submit">
+          Update
+        </button>
       </form>
     </div>
   );

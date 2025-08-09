@@ -1,10 +1,11 @@
 :root {
-    /* Tweak this to change the frame theme color */
+    /* Core theme tokens */
     --frame-color: #4c6ef5;
     /* elegant indigo/blue */
     --bg-soft: #f6f8fb;
     /* very light background */
     --text-color: #1f2a37;
+    /* dark text */
     --muted: #6b7280;
 }
 
@@ -16,7 +17,8 @@
     align-items: flex-start;
     justify-content: center;
     padding: 32px 16px;
-    color: var(#0ea5e9);
+    color: var(--text-color);
+    /* fixed var() usage */
 }
 
 /* Content width + frame */
@@ -28,7 +30,8 @@
 /* The elegant color frame */
 .card {
     background: #fff;
-    border: 2px solid var(#062a3b);
+    border: 2px solid var(--frame-color);
+    /* fixed var() usage */
     border-radius: 14px;
     padding: 24px 22px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
@@ -47,7 +50,6 @@
 .page .prose {
     text-align: justify;
     text-justify: inter-word;
-    /* extra hint for some browsers */
     hyphens: auto;
     /* smoother justification (ensure <html lang="en">) */
 }
@@ -66,15 +68,19 @@
 
 .card form input[type="text"]:focus,
 .card form input[type="password"]:focus {
-    border-color: var(#10ac85);
+    border-color: var(--frame-color);
+    /* fixed */
     box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.15);
 }
 
+/* Base buttons/links styled like buttons */
 .card button,
 .card a.button {
     display: inline-block;
-    border: 1px solid var(#0d7535);
-    background: var(#475569);
+    border: 1px solid var(--frame-color);
+    /* fixed */
+    background: var(--frame-color);
+    /* fixed */
     color: #fff;
     padding: 10px 14px;
     border-radius: 10px;
@@ -83,14 +89,28 @@
     margin-right: 8px;
 }
 
+/* Secondary (ghost) style if needed */
 .card button.secondary,
 .card a.secondary {
     background: transparent;
-    color: var(#0d7535);
+    color: var(--frame-color);
+    /* fixed */
+    border-color: var(--frame-color);
 }
 
+/* Dark outline variant specifically for Edit/Delete as requested */
+.button--dark-outline {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+}
+
+/* Action container spacing */
 .actions {
-    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    margin-top: 0;
+    /* inside list items, we keep it tight */
 }
 
 /* List look (todos) */
@@ -105,6 +125,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    /* gap between text and buttons */
     padding: 10px 12px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
@@ -113,6 +134,7 @@
 
 .todo-list li .text {
     flex: 1;
+    /* let the text take the space */
 }
 
 /* Header */
@@ -138,7 +160,7 @@
 .brand {
     font-weight: 700;
     text-decoration: none;
-    color: var(--text-color, #1f2a37);
+    color: var(--text-color);
 }
 
 .nav {
@@ -151,7 +173,7 @@
     text-decoration: none;
     padding: 8px 10px;
     border-radius: 10px;
-    color: var(--text-color, #1f2a37);
+    color: var(--text-color);
 }
 
 .nav-link:hover {
@@ -159,8 +181,8 @@
 }
 
 .nav-button {
-    border: 1px solid var(--frame-color, #4c6ef5);
-    background: var(--frame-color, #4c6ef5);
+    border: 1px solid var(--frame-color);
+    background: var(--frame-color);
     color: #fff;
     padding: 8px 12px;
     border-radius: 10px;

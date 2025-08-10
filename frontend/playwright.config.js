@@ -7,7 +7,7 @@ module.exports = defineConfig({
     retries: 0,
     use: {
         baseURL: 'http://localhost:3000', // assumes frontend runs on 3000
-        headless: false,
+        headless: true,
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
     },

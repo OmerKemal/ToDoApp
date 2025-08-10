@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-import Header from './components/Header';
+import Header from './components/header';
 import Login from './pages/Login';
 import TodoList from './pages/TodoList';
 import CreateTodo from './pages/CreateTodo';

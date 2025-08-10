@@ -31,7 +31,8 @@ jobs:
         working-directory: backend
         run: |
           nohup npm start >/dev/null 2>&1 &
-          sleep 3
+          # Wait for backend to be ready on port 5000
+          npx wait-on http://localhost:5000
 
       # Start frontend on :3000 (background)
       - name: Start frontend
@@ -41,8 +42,8 @@ jobs:
           PORT: 3000
         run: |
           nohup npm start >/dev/null 2>&1 &
-          # CRA may need a bit of time to boot on CI
-          sleep 12
+          # Wait for frontend to be ready on port 3000
+          npx wait-on http://localhost:3000
 
       # Run Newman API tests
       - name: Run Newman (API)
@@ -52,8 +53,8 @@ jobs:
       # Playwright UI tests
       - name: Install Playwright browsers
         working-directory: frontend
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps --verbose
 
       - name: Run Playwright (UI)
         working-directory: frontend
-        run: npx playwright test ./tests/E2E.spec.js
+        run: npx playwright test ./tests/E2E.spec.js --debug

@@ -32,19 +32,27 @@ A minimal full‑stack demo app to showcase automation:
 ---
 
 ## How to Run (Step‑by‑Step)
-Backend (navigate from the terminal)
+Clone the repository to your local
+Backend (navigate from the terminal to the backend directory and run the following commands)
 
-cd backend
 npm install    # or npm ci
+
+
 npm start      # http://localhost:5000
+
+
 npm run test:api
 
 
-Frontend (navigate to from another terminal)
+Frontend (navigate to from another terminal to the frontend directory and run the following commands)
 
-cd frontend
 npm install    # or npm ci
+
+
 npm start      # http://localhost:3000
+
+
+npx playwright test ./tests/E2E.spec.js
 
 # UI tests (servers must be running --- run these commands from another terminal)
 npx playwright install

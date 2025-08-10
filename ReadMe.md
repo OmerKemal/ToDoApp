@@ -52,17 +52,18 @@ npm install    # or npm ci
 npm start      # http://localhost:3000
 
 
+npx playwright install
+
+
 npx playwright test ./tests/E2E.spec.js
 
-# UI tests (servers must be running --- run these commands from another terminal)
-npx playwright install
-npm run test:ui          # headless
-npm run test:ui:headed   # headed (debug)
-npm run test:ui:report   # open HTML report
+# To get reports
+
+npm run test --ui --report   # open HTML report
 
 
-CI (GitHub Actions)
-Triggers on push/PR.
+# CI (GitHub Actions)
+Triggers on every push to main branch.
 
 
 Notes for Reviewers

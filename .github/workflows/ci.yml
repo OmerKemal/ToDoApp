@@ -26,24 +26,24 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      # Start backend on :5000 (background)
+      # Start backend on :5000 (no backgrounding)
       - name: Start backend
         working-directory: backend
         run: |
-          nohup npm start >/dev/null 2>&1 &
-          # Wait for backend to be ready on port 5000
-          npx wait-on http://localhost:5000
+          npm start &
+          # Wait for backend to be ready
+          sleep 10  # Adjust this if needed, depending on how long your backend takes to start
 
-      # Start frontend on :3000 (background)
+      # Start frontend on :3000 (no backgrounding)
       - name: Start frontend
         working-directory: frontend
         env:
           BROWSER: none
           PORT: 3000
         run: |
-          nohup npm start >/dev/null 2>&1 &
-          # Wait for frontend to be ready on port 3000
-          npx wait-on http://localhost:3000
+          npm start &
+          # Wait for frontend to be ready
+          sleep 15  # Adjust this as well, depending on frontend startup time
 
       # Run Newman API tests
       - name: Run Newman (API)
@@ -53,8 +53,8 @@ jobs:
       # Playwright UI tests
       - name: Install Playwright browsers
         working-directory: frontend
-        run: npx playwright install --with-deps --verbose
+        run: npx playwright install --with-deps
 
       - name: Run Playwright (UI)
         working-directory: frontend
-        run: npx playwright test ./tests/E2E.spec.js --debug
+        run: npx playwright test ./tests/E2E.spec.js

@@ -1,6 +1,6 @@
 # React + Node Todo App (Login + CRUD) with Automated Tests & CI
 
-A minimal full‑stack demo app to showcase automation:
+This project is a product of an experimental work conducted to showcase the automation strategy to be used for frontend and backend testing for a ToDo Application. The app has been constructed with the help of AI and it is an effort to expand my personal experience on using AI for my automation and testing skills and comprehending the working principles of an application. A minimal full‑stack demo app to showcase automation:
 
 - **Frontend:** React (Create React App)
 - **Backend:** Node.js + Express (in‑memory auth & todos)

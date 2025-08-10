@@ -1,5 +1,7 @@
 // tests/pom/EditTodoPage.js
+const { test, expect } = require('@playwright/test');
 class EditTodoPage {
+
     constructor(page) {
         this.page = page;
         this.root = page.getByTestId('edit-todo-page');
@@ -15,17 +17,17 @@ class EditTodoPage {
         await this.page.getByTestId('edit-todo-input').waitFor({ state: 'visible' });
     }
 
-    async setText(value) {
-        await this.input.fill(value);
+    async setText(text) {
+        await this.input.clear();
+        await this.input.fill(text);
     }
 
     async submitForm() {
         await this.submit.click();
     }
 
-    async updateText(id, value) {
-        await this.goto(id);
-        await this.setText(value);
+    async updateText(text) {
+        await this.setText(text);
         await this.submitForm();
     }
 

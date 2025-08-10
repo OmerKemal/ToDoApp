@@ -1,4 +1,4 @@
-const { expect, Page } = require('@playwright/test');
+const { expect } = require('@playwright/test');
 
 class LoginPage {
     constructor(page) {
@@ -12,9 +12,13 @@ class LoginPage {
     }
 
     /** Navigate to the login page. */
-    async goto(baseURL = '/') {
-        // Adjust the path if your route differs
-        await this.page.goto(new URL('/login', baseURL).toString());
+    async gotoLoginPage() {
+        // --- Start in a known state: same origin, clear storage ---
+
+        await this.page.evaluate(() => {
+            try { localStorage.clear(); sessionStorage.clear(); } catch { }
+        });
+        await this.page.goto('http://localhost:3000/', { waitUntil: 'domcontentloaded' });
         await expect(this.title).toBeVisible();
     }
 
@@ -27,12 +31,31 @@ class LoginPage {
     }
 
     async submit() {
-        await Promise.all([
-            // Successful login redirects to /todos
-            this.page.waitForURL('**/todos', { waitUntil: 'load' }),
-            this.submitButton.click(),
+        // Wait for the login form to be submitted and capture the response
+        const [response] = await Promise.all([
+            this.page.waitForResponse(response => response.url().includes('/login') && response.status() === 200), // Wait for the login response
+            this.submitButton.click(), // Click the submit button
         ]);
+
+        // Assuming the response contains a JSON body with a 'token' field
+        const data = await response.json(); // Get JSON response
+        if (data.token) {
+            await this.storeAuthToken(data.token);  // Store the token in localStorage
+        } else {
+            throw new Error('Token not found in the response');
+        }
+
+        // Wait for the URL to change to /todos after successful login
+        await this.page.waitForURL('**/todos', { waitUntil: 'load' });
     }
+
+    async storeAuthToken(token) {
+        await this.page.evaluate((token) => {
+            localStorage.setItem('authToken', token);  // Store the token in localStorage
+        }, token);
+    }
+
+
 
     /** Convenience method to perform the full login flow. */
     async login(username, password) {

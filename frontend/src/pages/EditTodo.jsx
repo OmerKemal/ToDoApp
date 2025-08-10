@@ -28,7 +28,7 @@ const EditTodo = () => {
     const token = localStorage.getItem('token');
     try {
       await updateTodo(id, { text }, token);
-      navigate('/');
+      navigate('/todos');
     } catch (err) {
       console.error('Update failed:', err);
       alert('Failed to update todo');

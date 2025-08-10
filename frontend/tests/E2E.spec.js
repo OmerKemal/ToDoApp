@@ -1,25 +1,24 @@
 const { test, expect } = require('@playwright/test');
+const { BasePage } = require('../tests/PageObjects/BasePage.js')
 const { LoginPage } = require('../tests/PageObjects/LoginPage.js');
 const { CreateTodoPage } = require('../tests/PageObjects/CreateTodoPage');
 const { EditTodoPage } = require('../tests/PageObjects/EditTodoPage.js');
 
 test.only('E2E: login → create → edit → delete → logout', async ({ page }) => {
-  test.setTimeout(90_000); // more room on slow dev servers
 
-  // --- Start in a known state: same origin, clear storage ---
-  await page.goto('http://localhost:3000/', { waitUntil: 'domcontentloaded' });
-  await page.evaluate(() => {
-    try { localStorage.clear(); sessionStorage.clear(); } catch { }
-  });
+  const basePage = new BasePage(page);
+  const createTodoPage = new CreateTodoPage(page);
+  const loginPage = new LoginPage(page);
+  const editTodoPage = new EditTodoPage(page);
 
-
+  let newTask = 'Give Donation';
+  let task = 'Read Books';
 
   await test.step('successfull login', async ({ page, baseURL }) => {
-    const loginPage = new LoginPage(page);
 
     // --- LOGIN ---
 
-    await loginPage.goto('http://localhost:3000/login', { waitUntil: 'domcontentloaded' });
+    await loginPage.gotoLoginPage();
 
     // enter username and password, login and validate the next page in a single method:
 
@@ -29,33 +28,46 @@ test.only('E2E: login → create → edit → delete → logout', async ({ page 
 
   // --- CREATE ---
 
-  //generate a task to do and validate todos:
+  //generate a task to do and validate the new task
 
   await test.step('create a todo', async () => {
-    let task = 'Read Books';
-    let createTodoPage = new CreateTodoPage(page);
-    await createTodoPage.createTodo(task);
+
+    await basePage.clickCreate();
+    await createTodoPage.fillTodoText(task);
     await createTodoPage.submitAndWaitForTodos();
   })
 
   // --- EDIT ---
+
+  //update one of the tasks:
+
   await test.step('edit a task', async () => {
-    let taskId = 1;
-    let newTask = 'Give Donation';
-    const editTodoPage = new updateTodoPage(page);
-    await editTodoPage.updatedText(taskId, newTask);
+
+    await basePage.clickEditByIndex(0);
+    await editTodoPage.updateText(newTask);
 
   })
 
   // --- DELETE ---
-  await page.locator('li', { hasText: updatedText })
-    .getByRole('button', { name: 'Delete' })
-    .click();
 
-  await expect(page.getByText(updatedText)).toHaveCount(0);
+  //delete one of the tasks and validate
+
+  await test.step('update a task', async () => {
+
+    await basePage.clickDeleteByIndex(0);
+    await expect(page.getByText(newTask)).toHaveCount(0);
+
+  })
+
 
   // --- LOG OUT ---
-  await page.evaluate(() => localStorage.removeItem('token'));
-  await page.goto('http://localhost:3000/login', { waitUntil: 'domcontentloaded' });
-  await expect(page).toHaveURL(/\/login$/);
+
+  //Logout and validate the login page
+
+  await test.step('logout and validate login page', async () => {
+
+    await basePage.clickLogout();
+    await loginPage.expectOnLoginPage();
+
+  })
 });

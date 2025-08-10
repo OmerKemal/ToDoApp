@@ -1,6 +1,15 @@
 # React + Node Todo App (Login + CRUD) with Automated Tests & CI
 
-This project is a product of an experimental work conducted to showcase the automation strategy to be used for frontend and backend testing for a ToDo Application. The app has been constructed with the help of AI and it is an effort to expand my personal experience on using AI for my automation and testing skills and comprehending the working principles of an application. A minimal full‑stack demo app to showcase automation:
+This project is a product of an experimental work conducted to showcase the automation strategy to be used for frontend and backend testing for a ToDo Application. The app has been constructed with the help of AI and it is an effort to expand my personal experience on using AI for my automation and testing skills and comprehending the working principles of an application. 
+
+
+The frontend automation framework is based on Page-Object-Model (POM) and it employs re-usable and re-scalable methods developed to handle any dynamic test. As a modern automation tool Playwright is chosen to benefit from the advantages like in-built auto-waits.
+
+The backend automation covers all the CRUD operations employed in this app to test reliable functioning of the endpoints.
+
+As the final step CI integration to Github Actions is completed to run the tests on each push to the main branch.
+
+A minimal full‑stack demo app to showcase automation:
 
 - **Frontend:** React (Create React App)
 - **Backend:** Node.js + Express (in‑memory auth & todos)

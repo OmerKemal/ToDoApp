@@ -17,6 +17,10 @@ jobs:
         with:
           node-version: '18'
 
+      # Clear npm cache to prevent issues from old packages
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       # Install deps
       - name: Install backend deps
         working-directory: backend
@@ -26,13 +30,17 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      # Check the directory structure for components/Header.js
+      - name: Check directory structure
+        run: ls -R frontend/src/components
+
       # Start backend on :5000 (no backgrounding)
       - name: Start backend
         working-directory: backend
         run: |
           npm start &
           # Wait for backend to be ready
-          sleep 10  # Adjust this if needed, depending on how long your backend takes to start
+          sleep 10
 
       # Start frontend on :3000 (no backgrounding)
       - name: Start frontend
@@ -43,7 +51,7 @@ jobs:
         run: |
           npm start &
           # Wait for frontend to be ready
-          sleep 15  # Adjust this as well, depending on frontend startup time
+          sleep 15
 
       # Run Newman API tests
       - name: Run Newman (API)
